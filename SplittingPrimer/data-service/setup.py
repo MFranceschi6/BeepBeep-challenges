@@ -10,5 +10,5 @@ setup(name='beepbeep-data',
       entry_points="""
       [console_scripts]
       beepbeep-dataservice = beepbeep.dataservice.run:main
-      beepbeep-dateserviice-challenge = beepbeep.challenge_microservice.challenge:main
+      beepbeep-dataservice-challenge = beepbeep.challenge_microservice.challenge:main
       """)
