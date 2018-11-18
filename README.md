@@ -8,8 +8,8 @@ the challenges of a specified user.
 
 This microservice is completely independet from data-service.
 It exploits an own database and runs on the port 5003.
-It is possible to connect to it following the instructions writte in the readme https://github.com/MFranceschi6/BeepBeep-dataservice/blob/master/README.md
-changin beepbepp-datasevice with beepbeep-dataservice-challenge
+
+To use this microservice is needed put in the setup.py "beepbeep-dataservice-challenge = beepbeep.challenge_microservice.challenge:main" between console scripts
 
 example of utilization:
 - http://127.0.0.1:5003/challenges/1

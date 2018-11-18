@@ -1,5 +1,0 @@
-
-      [console_scripts]
-      beepbeep-dataservice = beepbeep.dataservice.run:main
-      beepbeep-dataservice-challenge = beepbeep.challenge_microservice.challenge:main
-      
