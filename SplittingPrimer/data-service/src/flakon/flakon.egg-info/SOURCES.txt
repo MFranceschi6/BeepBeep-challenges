@@ -1,0 +1,14 @@
+LICENSE
+MANIFEST.in
+README.rst
+requirements.txt
+setup.py
+flakon/__init__.py
+flakon/blueprints.py
+flakon/util.py
+flakon.egg-info/PKG-INFO
+flakon.egg-info/SOURCES.txt
+flakon.egg-info/dependency_links.txt
+flakon.egg-info/not-zip-safe
+flakon.egg-info/requires.txt
+flakon.egg-info/top_level.txt

@@ -1,0 +1,106 @@
+swagger: "2.0"
+info:
+  title: Challenges Data Service
+  description: returns info about challenges
+  license:
+    name: APLv2
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+basePath: /api
+paths:
+    /create_challenge:
+      post:
+        operationId: createChallenge
+        description: Create Challenge
+        produces:
+        - application/json
+        responses:
+          '200':
+            description: New Challenge id
+            schema:
+                type: integer
+    /challenges/{runner_id}:
+      get:
+        operationId: getChallenges
+        description: Get Challenges
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+        responses:
+          '200':
+            description: List of challenges
+          '302':
+            description: Not found the specified user so redirect to '/'
+    /challenges/{runner_id}/{challenge_id}:
+      get:
+        operationId: getChallengeID
+        description: Returns the specified challenge
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+          - name: challenge_id
+            in: path
+            description: ID of Challenge
+            required: true
+            type: integer
+        responses:
+          '200':
+            description: Returns specific challenge
+          '302':
+            description: Not found the specified challenge so redirect to '/'
+ 
+    /complete_challenge/{runner_id}/{challenge_id}:
+      get:
+        operationId: completeChallenge
+        description: Complete Challenge
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+          - name: challenge_id
+            in: path
+            description: ID of Challenge
+            required: true
+            type: integer            
+        responses:
+          '200':
+            description: List of run eligible to complete the challenge or challenge detail
+          '302':
+            description: Not found the specified challenge so redirect to '/'
+      post:
+        operationId: terminateChallenge
+        description: Terminate Challenge
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+          - name: challenge_id
+            in: path
+            description: ID of Challenge
+            required: true
+            type: integer         
+        responses:
+          '200':
+            description: Challenge completed
+          '302': 
+            description: Not found the specified challenge or the run so redirect to '/'
+
+

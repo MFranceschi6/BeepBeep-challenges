@@ -1,0 +1,91 @@
+swagger: "2.0"
+info:
+  title: beepbeep Data Service
+  description: returns info about beepbeep
+  license:
+    name: APLv2
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+basePath: /api
+paths:
+    /runs/{runner_id}:
+      get:
+        operationId: getRuns
+        description: Get Runs
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+        responses:
+          '200':
+            description: List of runs
+    /runs/{runner_id}/{run_id}:
+      get:
+        operationId: getRunID
+        description: Get a specific Run
+        produces:
+        - application/json
+        parameters:
+          - name: runner_id
+            in: path
+            description: ID of Runner
+            required: true
+            type: integer
+          - name: run_id
+            in: path
+            description: ID of Run
+            required: true
+            type: integer
+        responses:
+          '200':
+            description: Returns the specified Run
+    /add_runs:
+      post:
+        operationId: addRuns
+        description: Adds runs
+        produces:
+        - application/json
+        responses:
+          '200':
+            description: List of runs ids
+            schema:
+                type: array
+                items:
+                    type: integer
+    /users:
+      get:
+        operationId: getUsers
+        description: Returns a list of users
+        produces:
+        - application/json
+        responses:
+          '200':
+            description: List of Ids
+            schema:
+                type: array
+                items:
+                    type: integer
+    /users/{id_user}:
+      get:
+        operationId: getUserID
+        description: Returns a specific user
+        produces:
+        - application/json
+        parameters:
+          - name: id_user
+            in: path
+            description: ID of User
+            required: true
+            type: integer
+        responses:
+          '200':
+            description: List of Ids
+            schema:
+                type: array
+                items:
+                    type: integer
+
