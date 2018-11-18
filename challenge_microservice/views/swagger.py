@@ -19,20 +19,11 @@ def check_user(runner_id):
     result = r.json()
     return 'id' in result
 
-def get_run_id(runner_id, run_id):
-    url = 'http://127.0.0.1:5002/runs/' + str(runner_id) + '/' + str(run_id)
+def get_single_run(runner_id, run_id):
+    url = 'http://127.0.0.1:5002/user/' + str(runner_id) + '/runs/' + str(run_id)
     r = requests.get(url)
     result = r.json()
     return result
-
-def get_single_run(runner_id, run_id):
-    url = 'http://127.0.0.1:5002/runs/' + str(runner_id)
-    r = requests.get(url)
-    results = r.json()
-    result = [result for result in results if result['id'] == int(run_id)]
-    if len(result) > 0:
-        return result[0]
-    else: return None
 
 def get_challenge_of_runner_id(runner_id, challenge_id):
     return db.session.query(Challenge).\
@@ -44,7 +35,6 @@ def get_challenge_of_runner_id(runner_id, challenge_id):
 @api.operation('createChallenge')
 def create_challenge():
     challenge = request.get_json()
-    #run = get_run_id(challenge['runner_id'], challenge['run_challenged_id'])
     run = get_single_run(challenge['runner_id'], challenge['run_challenged_id'])
     if check_user(challenge['runner_id']) and 'id' in run:
         if run['runner_id'] == int(challenge['runner_id']):
