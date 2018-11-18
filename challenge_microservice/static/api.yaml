@@ -34,7 +34,7 @@ paths:
         responses:
           '200':
             description: List of challenges
-          '302':
+          '404':
             description: Not found the specified user so redirect to '/'
     /challenges/{runner_id}/{challenge_id}:
       get:
@@ -56,7 +56,7 @@ paths:
         responses:
           '200':
             description: Returns specific challenge
-          '302':
+          '404':
             description: Not found the specified challenge so redirect to '/'
  
     /complete_challenge/{runner_id}/{challenge_id}:
@@ -79,7 +79,7 @@ paths:
         responses:
           '200':
             description: List of run eligible to complete the challenge or challenge detail
-          '302':
+          '404':
             description: Not found the specified challenge so redirect to '/'
       post:
         operationId: terminateChallenge
@@ -100,7 +100,7 @@ paths:
         responses:
           '200':
             description: Challenge completed
-          '302': 
+          '404': 
             description: Not found the specified challenge or the run so redirect to '/'
 
 
