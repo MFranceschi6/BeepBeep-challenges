@@ -4,7 +4,7 @@ from flakon import create_app as _create_app
 from flakon.util import error_handling
 from flask import request, abort, g
 from flask_cors import CORS
-
+from pathlib import Path
 import jwt
 
 from .views import blueprints
@@ -15,7 +15,6 @@ _HERE = os.path.dirname(__file__)
 os.environ['TESTDIR'] = os.path.join(_HERE, 'tests')
 _SETTINGS = os.path.join(_HERE, 'settings.ini')
 
-
 def create_app(settings=None):
     if settings is None:
         settings = _SETTINGS
@@ -25,7 +24,6 @@ def create_app(settings=None):
         app.config['pub_key'] = f.read()
 
     CORS(app)
-
     @app.before_request
     def before_req():
         if app.config.get('NEED_TOKEN', True):

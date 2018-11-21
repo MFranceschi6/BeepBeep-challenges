@@ -1,23 +1,80 @@
-# BeepBeep-challenges
-Here it is defined the Challenge microservice.
-Thanks to this microservice is possible to:
--   create
--   visualize
--   complete
-the challenges of a specified user.
+# BeepBeep-dataservice :runner:
 
-This microservice is completely independet from data-service.
-It exploits an own database and runs on the port 5003.
+## API Documentation :trollface:
 
-To use this microservice is needed put in the setup.py "beepbeep-dataservice-challenge = beepbeep.challenge_microservice.challenge:main" between console scripts
+This microservice provide a standard API, the documentation can be found at this [page](https://mfranceschi6.github.io/BeepBeep-dataservice)
 
-example of utilization:
-- http://127.0.0.1:5003/challenges/1
-  that allows to visualize all the challenges of the user 1
-- http://127.0.0.1:5003/challenges/1/1
-  that allows to visualize the challenge 1 of the user 1
-- http://127.0.0.1:5003/complete_challenge/1/1
-  that allows to visualize the runs that are able to complete the challenge 1 of the user 1
-  On the same link but with a POST request, providing a run id, it is possible to complete a challenge
-- http://127.0.0.1:5003/create_challenge
-  That thanks to a POST request, providing the user_id and a run_id, is possibile to create a new challenge.
+Do you want to know how I made it? Well nothing more simpler: use make :smile:
+
+first of all change the variables PKG, SERVICE and API inside the makefile
+
+```
+...
+
+API=api.yaml #name of the api specification file
+PKG=beepbeep #name of the package
+SERVICE=dataservice #name of the service
+...
+
+```
+
+then runs doc_dependecies to install the programs needed
+and doc
+
+```
+$ sudo make doc_dependencies
+$ make docs
+```
+
+This will create a directory docs in the project and put data inside the path `$(PKG)/$(SERVICE)/static/doc/`
+
+It's a good idea to show the documentation with the service: run it and go to `/api/doc` you can see from `home.py` how the website is served
+
+```python
+import os
+from flask import send_from_directory, Blueprint
+...
+
+static_file_dir = os.path.dirname(os.path.realpath(__file__))
+home = Blueprint('home', __name__)
+
+...
+
+@home.route('/api/<name>')
+@home.route('/api/<path>/<name>')
+def render_static(name, path=None):
+    if name == 'doc':
+        return send_from_directory(static_file_dir+"/../static/doc", 'index.html')
+
+...
+```
+
+
+
+## How to run It :smile:
+
+BE SURE THAT `python3` and `pip3` are referring to `python 3.7.x`.
+To find your `python` and `pip` version, run this commands:
+
+```bash
+$ python3 --version
+> Python 3.7.0
+$ pip3 --version
+> pip 18.0 from /usr/local/lib/python3.7/site-packages/pip (python 3.7)
+```
+
+
+Once you found commands refering to the correct version, use them in the following scripts.
+
+- Open a new terminal and run `redis-server`
+
+  `$ redis-server`
+
+- Open a new terminal and run `data-service`
+
+  ```bash
+  cd <YOUR_DIRECTORY>/BeepBeep-dataservice/
+  pip3 install -r requirements.txt
+  python3 setup.py develop
+  beepbeep-dataservice
+  ```
