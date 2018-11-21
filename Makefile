@@ -5,7 +5,7 @@ BIN = $(VENV)/bin
 PYTHON = $(BIN)/python
 API=api.yaml
 PKG=beepbeep
-SERVICE=challenge-microservice
+SERVICE=dataservice
 
 INSTALL = $(BIN)/pip install --no-deps
 
@@ -35,7 +35,7 @@ doc_dependencies:
 	curl -sL https\://deb.nodesource.com/setup_8.x | sudo bash - && apt-get install nodejs bundler && npm install -g widdershins
 
 slate:
-	git clone https\://github.com/lord/slate.git
+	git clone https\://github.com/MFranceschi6/slate.git
 
 widdershins: slate
 	widdershins --expandBody ./$(PKG)/$(SERVICE)/static/$(API) -o ./slate/source/index.html.md
@@ -48,14 +48,20 @@ endif
 build_docs: widdershins build_middleman
 	cd ./slate && bundle exec middleman build
 
-create_static_doc:
-	mkdir -p $(PKG)/$(SERVICE)/static/doc/
+create_static:
+	mkdir -p src/flakon/flakon/static
+
+create_static_doc: create_static
+	mkdir -p src/flakon/flakon/static/doc/
 
 create_docs:
 	mkdir -p docs
 
 docs: widdershins build_docs create_static_doc create_docs
-	cd ./slate && cp -r build/* ../$(PKG)/$(SERVICE)/static/doc/ && cp -r build/* ../docs/
+	cd ./slate && cp -r build/* ../src/flakon/flakon/static/doc/ && cp -r build/* ../docs/
+
+clean-doc-env:
+	rm  -rf slate
 
 clean-doc:
-	rm  -rf slate
+	rm -rf docs && rm -rf src/flakon/flakon/static

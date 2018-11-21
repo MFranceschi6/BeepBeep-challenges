@@ -758,7 +758,7 @@ curl -X GET 0.0.0.0:5002/users <span class="se">\</span>
 <tr>
 <td>» users</td>
 <td>[allOf]</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
 <td>none</td>
 </tr>
@@ -832,10 +832,10 @@ curl -X GET 0.0.0.0:5002/users <span class="se">\</span>
 </tr>
 <tr>
 <td>»»» strava_token</td>
-<td>string</td>
+<td>string\</td>
+<td>null</td>
 <td>false</td>
 <td>none</td>
-<td>The strava_token of the user</td>
 </tr>
 <tr>
 <td>»»» age</td>
@@ -1787,14 +1787,21 @@ curl -X GET 0.0.0.0:5002/user/<span class="o">{</span>user_id<span class="o">}</
 <td>query</td>
 <td>string(date)</td>
 <td>false</td>
-<td>If this parameter is set all the runs returned will have a start_date not less than date-start</td>
+<td>Datetime in %Y-%m-%dT%H:%M:%SZ format. If this parameter is set all the runs returned will have a start_date not less than date-start</td>
 </tr>
 <tr>
 <td>finish-date</td>
 <td>query</td>
-<td>string(date)</td>
+<td>string(date-time)</td>
 <td>false</td>
-<td>If this parameter is set all the runs returned will have a start_date not greater than date-finish</td>
+<td>Datetime in %Y-%m-%dT%H:%M:%SZ formatIf this parameter is set all the runs returned will have a start_date not greater than date-finish</td>
+</tr>
+<tr>
+<td>from-id</td>
+<td>query</td>
+<td>integer</td>
+<td>false</td>
+<td>If this parameter is set all the runs returned will have an id greater than from-id</td>
 </tr>
 </tbody></table>
 
@@ -2372,10 +2379,10 @@ This operation does not require authentication
 </tr>
 <tr>
 <td>strava_token</td>
-<td>string</td>
+<td>string\</td>
+<td>null</td>
 <td>false</td>
 <td>none</td>
-<td>The strava_token of the user</td>
 </tr>
 <tr>
 <td>age</td>
