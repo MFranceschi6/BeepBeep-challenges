@@ -195,3 +195,19 @@ paths:
           '404':
             $ref: '#/components/responses/NotFound'
 
+    /user/{runner_id}/delete_user_challenges:
+      delete:
+        operationId: deleteUserChallenges
+        description: Delete all the Challenges of a specified User
+        parameters:
+        - in: path
+          name: runner_id
+          description: The id of the user
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: The challenges are succesfully deleted
+
+

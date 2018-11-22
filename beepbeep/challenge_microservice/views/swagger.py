@@ -48,14 +48,12 @@ def create_challenge():
             db.session.add(db_challenge)
             db.session.commit()
             return "added 1 challenge", 204
-    return bad_response(400, 'No user with ID ' + str(challenge['runner_id']) + 'and run' + str(run['runner_id']))
+    return bad_response(400, 'No user with ID ' + str(challenge['runner_id']) + 'and run' + str(challenge['run_challenged_id']))
 
 
 @api.operation('getChallenges')
 def get_challenges(runner_id):
     url = URL_DATASERVICE + '/user/' + str(runner_id)
-    print("SETTING")
-    print(generate_dataservice_url())
     r = requests.get(url)
     result = r.json()
     if 'id' in result:
@@ -70,19 +68,6 @@ def get_challenge_id(runner_id, challenge_id):
     if challenge is not None:
         return jsonify(challenge.to_json())
     return bad_response(404, 'No challenge with ID ' + str(challenge_id) + ' for user with ID ' + str(runner_id))
-
-#@api.operation('completeChallenge')
-#def complete_challenge(runner_id, challenge_id):
-#    challenge = get_challenge_of_runner_id(runner_id, challenge_id)
-#    if challenge is not None:
-#        if challenge.run_challenger_id is None:
-#            url = URL_DATASERVICE + '/user/' + str(runner_id) + '/runs'
-#            r = requests.get(url, params= {'start-date': date_parsing(challenge.start_date)})
-#            results = r.json()
-#            return jsonify([result for result in results])
-#        else: return jsonify(challenge.to_json())
-#    else: return bad_response(404, 'No challenge with ID ' + str(challenge_id) + ' for user with ID ' + str(runner_id))
-
 
 @api.operation('completeChallenge')
 def complete_challenge(runner_id, challenge_id):
@@ -109,3 +94,23 @@ def determine_result(challenge, current_run):
             return challenged_run['average_speed'] <= current_run['average_speed']
         else: return False
     return False
+
+@api.operation('deleteUserChallenges')
+def delete_user_challenges(runner_id):
+    challenges = db.session.query(Challenge).filter(Challenge.runner_id == runner_id)
+    for challenge in challenges:
+        db.session.delete(challenge)
+        db.session.commit()
+    return "challenges removed", 200
+
+#@api.operation('completeChallenge')
+#def complete_challenge(runner_id, challenge_id):
+#    challenge = get_challenge_of_runner_id(runner_id, challenge_id)
+#    if challenge is not None:
+#        if challenge.run_challenger_id is None:
+#            url = URL_DATASERVICE + '/user/' + str(runner_id) + '/runs'
+#            r = requests.get(url, params= {'start-date': date_parsing(challenge.start_date)})
+#            results = r.json()
+#            return jsonify([result for result in results])
+#        else: return jsonify(challenge.to_json())
+#    else: return bad_response(404, 'No challenge with ID ' + str(challenge_id) + ' for user with ID ' + str(runner_id))
