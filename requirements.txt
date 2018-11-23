@@ -1,4 +1,4 @@
-    pyjwt
+pyjwt
 -e git+https://github.com/MFranceschi6/flakon.git#egg=flakon
 flask_webtest
 cryptography
@@ -6,9 +6,3 @@ sqlalchemy
 flask_sqlalchemy
 chaussette
 flask_cors
-flask_cors
-
-flask_cors
-
-flask_cors
-

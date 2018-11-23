@@ -103,8 +103,10 @@ paths:
             description: The challenge were added succesfully
           '400':
             $ref: '#/components/responses/BadRequest'
+          '503':
+            description: Connection with Data Service failed
 
-    /user/{runner_id}/challenges:
+    /users/{runner_id}/challenges:
       get:
         operationId: getChallenges
         description: Get all the challenges of an user
@@ -116,8 +118,8 @@ paths:
           schema:
             type: integer
         responses:
-          '400':
-            $ref: '#/components/responses/BadRequest'
+          '503':
+            description: Connection with Data Service failed
           '404':
             $ref: '#/components/responses/NotFound'
           '200':
@@ -130,7 +132,7 @@ paths:
                     $ref: '#/components/schemas/ResponseChallenge'
                   minItems: 0
 
-    /user/{runner_id}/challenges/{challenge_id}:
+    /users/{runner_id}/challenges/{challenge_id}:
       get:
         operationId: getChallengeID
         description: Get The challenge *challenge_id* of the user *runner_id*
@@ -157,7 +159,7 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ResponseChallenge'
 
-    /user/{runner_id}/complete_challenge/{challenge_id}:
+    /users/{runner_id}/complete_challenge/{challenge_id}:
       parameters:
       - in: path
         name: runner_id
@@ -194,8 +196,11 @@ paths:
                   $ref: '#/components/schemas/ResponseChallenge'
           '404':
             $ref: '#/components/responses/NotFound'
+          '503':
+            description: Connection with Data Service failed
 
-    /user/{runner_id}/delete_user_challenges:
+
+    /users/{runner_id}/delete_user_challenges:
       delete:
         operationId: deleteUserChallenges
         description: Delete all the Challenges of a specified User

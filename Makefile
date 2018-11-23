@@ -4,7 +4,6 @@ VIRTUALENV = virtualenv
 BIN = $(VENV)/bin
 PYTHON = $(BIN)/python
 API=api.yaml
-PKG=beepbeep
 SERVICE=dataservice
 
 INSTALL = $(BIN)/pip install --no-deps
@@ -65,3 +64,23 @@ clean-doc-env:
 
 clean-doc:
 	rm -rf docs && rm -rf src/flakon/flakon/static
+
+dirtree:
+	mkdir -p beepbeep/$(SERVICE) beepbeep/$(SERVICE)/static beepbeep/$(SERVICE)/tests beepbeep/$(SERVICE)/views beepbeep/$(SERVICE)
+
+requiredfile:
+	cat 'from setuptools import setup, find_packages \
+	from beepbeep.dataservice import __version__ \
+	\
+	\
+	setup(name=\'beepbeep-data\', \
+	  version=__version__, \
+	  packages=find_packages(), \
+      include_package_data=True, \
+      zip_safe=False, \
+      entry_points=\"\"\" \
+      [console_scripts] \
+      beepbeep-$(SERVICE) = beepbeep.$(SERVICE).run:main \
+      \"\"\")' \ > setup.py
+
+
