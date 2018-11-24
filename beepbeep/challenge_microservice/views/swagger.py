@@ -32,14 +32,15 @@ def date_parsing(date):
 
 
 @api.operation('createChallenge')
-def create_challenge():
+def create_challenge(runner_id):
     challenge = request.get_json()
+    runner_id = int(runner_id)
     try:
-        run = get_single_run(challenge['runner_id'], challenge['run_challenged_id'])
-        if check_user(challenge['runner_id']) and 'id' in run:
-            if run['runner_id'] == challenge['runner_id']:
+        run = get_single_run(runner_id, challenge['run_challenged_id'])
+        if check_user(runner_id) and 'id' in run:
+            if run['runner_id'] == runner_id:
                 db_challenge = Challenge()
-                db_challenge.runner_id = challenge['runner_id']
+                db_challenge.runner_id = runner_id
                 db_challenge.run_challenged_id = challenge['run_challenged_id']
                 db_challenge.start_date = datetime.today()
                 db.session.add(db_challenge)
@@ -48,7 +49,7 @@ def create_challenge():
     except requests.exceptions.RequestException as err:
         print(err)
         return abort(503) # SERVICE UNAVAILABLE
-    return bad_response(400, 'No user with ID ' + str(challenge['runner_id']) + 'and run' + str(challenge['run_challenged_id']))
+    return bad_response(400, 'No user with ID ' + str(runner_id) + 'and run' + str(challenge['run_challenged_id']))
 
 
 @api.operation('getChallenges')

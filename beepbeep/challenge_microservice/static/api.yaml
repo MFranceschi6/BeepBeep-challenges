@@ -82,31 +82,14 @@ components:
             $ref: '#/components/schemas/Error'
 
 paths:
-    /create_challenge:
-      post:
-        operationId: createChallenge
-        description: Create a new challenge
-        requestBody:
-          description: User has to provide its id and the run_challenged_id
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  runner_id:
-                    type: integer
-                  run_challenged_id:
-                    type: integer
-        responses:
-          '204':
-            description: The challenge were added succesfully
-          '400':
-            $ref: '#/components/responses/BadRequest'
-          '503':
-            description: Connection with Data Service failed
-
     /users/{runner_id}/challenges:
+      parameters:
+        - in: path
+          name: runner_id
+          description: The id of the user
+          required: true
+          schema:
+            type: integer
       get:
         operationId: getChallenges
         description: Get all the challenges of an user
@@ -131,35 +114,34 @@ paths:
                   items:
                     $ref: '#/components/schemas/ResponseChallenge'
                   minItems: 0
+      post:
+        operationId: createChallenge
+        description: Create a new challenge
+        requestBody:
+          description: User has to provide its id and the run_challenged_id
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  run_challenged_id:
+                    type: integer
+        responses:
+          '204':
+            description: The challenge were added succesfully
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '503':
+            description: Connection with Data Service failed
+      delete:
+        operationId: deleteUserChallenges
+        description: Delete all the Challenges of a specified User
+        responses:
+          '200':
+            description: The challenges are succesfully deleted
 
     /users/{runner_id}/challenges/{challenge_id}:
-      get:
-        operationId: getChallengeID
-        description: Get The challenge *challenge_id* of the user *runner_id*
-        parameters:
-          - in: path
-            name: runner_id
-            description: ID of the user
-            required: true
-            schema:
-              type: integer
-          - in: path
-            name: challenge_id
-            description: ID of the Challenge
-            required: true
-            schema:
-              type: integer
-        responses:
-          '404':
-            $ref: '#/components/responses/NotFound'
-          '200':
-            description: The challenge of the user
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ResponseChallenge'
-
-    /users/{runner_id}/complete_challenge/{challenge_id}:
       parameters:
       - in: path
         name: runner_id
@@ -173,46 +155,40 @@ paths:
         required: true
         schema:
           type: integer
-      put:
-        operationId: completeChallenge
-        description: Complete the challenge specied with the run challenger 
-        requestBody:
-          description: The id of the run challenger
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  run_challenger_id:
-                    type: integer
+      get:
+        operationId: getChallengeID
+        description: Get The challenge *challenge_id* of the user *runner_id*
         responses:
-        responses:
+          '404':
+            $ref: '#/components/responses/NotFound'
           '200':
-            description: The challenge succesfully updated
+            description: The challenge of the user
             content:
               application/json:
                 schema:
                   $ref: '#/components/schemas/ResponseChallenge'
-          '404':
-            $ref: '#/components/responses/NotFound'
-          '503':
-            description: Connection with Data Service failed
-
-
-    /users/{runner_id}/delete_user_challenges:
-      delete:
-        operationId: deleteUserChallenges
-        description: Delete all the Challenges of a specified User
-        parameters:
-        - in: path
-          name: runner_id
-          description: The id of the user
-          required: true
-          schema:
-            type: integer
-        responses:
-          '200':
-            description: The challenges are succesfully deleted
-
+      put:
+          operationId: completeChallenge
+          description: Complete the challenge specied with the run challenger 
+          requestBody:
+            description: The id of the run challenger
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    run_challenger_id:
+                      type: integer
+          responses:
+            '200':
+              description: The challenge succesfully updated
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ResponseChallenge'
+            '404':
+              $ref: '#/components/responses/NotFound'
+            '503':
+              description: Connection with Data Service failed
 
