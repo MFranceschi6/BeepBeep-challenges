@@ -6,19 +6,19 @@ from flask import request, jsonify, redirect, abort
 from beepbeep.challenge_microservice.database import db, Challenge
 from json import loads
 from flakon.util import retry_request
-from flakon.request_utils import users_endpoint, get_request, runs_endpoint, put_request_retry
+from flakon.request_utils import users_endpoint, get_request_retry, runs_endpoint, put_request_retry
 
 HERE = os.path.dirname(__file__)
 YML = os.path.join(HERE, '..', 'static', 'api.yaml')
 api = SwaggerBlueprint('API', __name__, swagger_spec=YML)
 
 def check_user(runner_id):
-    r = get_request(users_endpoint(), runner_id)
+    r = get_request_retry(users_endpoint(), runner_id)
     result = r.json()
     return 'id' in result
 
 def get_single_run(runner_id, run_id):
-    r = get_request(runs_endpoint(runner_id), run_id)
+    r = get_request_retry(runs_endpoint(runner_id), run_id)
     result = r.json()
     return result
 
