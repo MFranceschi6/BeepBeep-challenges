@@ -4,7 +4,8 @@ VIRTUALENV = virtualenv
 BIN = $(VENV)/bin
 PYTHON = $(BIN)/python
 API=api.yaml
-SERVICE=dataservice
+PKG=beepbeep
+SERVICE=challenge_microservice
 
 INSTALL = $(BIN)/pip install --no-deps
 
