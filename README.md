@@ -1,75 +1,24 @@
 # BeepBeep-dataservice-challenge
 
-This microservice provide the following functionalities for the user:
-- 
+à# This microservice provide the following functionalities for the user:
 
-```
-...
+- Create new Challenge, reachable to /users/<runner_id>/challenges and provining a id run
+- Check the challenges of a user, reachable to /users/<runner_id>/challenges
+- Delete all the challenges of a user, reachable to /user/<runner_id>/challenges
+- Check a specific challenge of a user, reachable to /users/<runner_id>/challenges/<challenge_id>
+- Complete a challenge, reachable to /users/<runner_id>/challenges/<challenge_id> and providing another id run
+    To complete correctly a challenge is needed to provide a run that has been created later than the creation date of the challenge.
 
-API=api.yaml #name of the api specification file
-PKG=beepbeep #name of the package
-SERVICE=dataservice #name of the service
-...
+To win a challenge the user must run for longer distance and at least at the same speed than the challenged run
+or the user can run for the same distance but must have a speed greater than the challenged run
 
-```
-
-then runs doc_dependecies to install the programs needed
-and doc
-
-```
-$ sudo make doc_dependencies
-$ make docs
-```
-
-This will create a directory docs in the project and put data inside the path `$(PKG)/$(SERVICE)/static/doc/`
-
-It's a good idea to show the documentation with the service: run it and go to `/api/doc` you can see from `home.py` how the website is served
-
-```python
-import os
-from flask import send_from_directory, Blueprint
-...
-
-static_file_dir = os.path.dirname(os.path.realpath(__file__))
-home = Blueprint('home', __name__)
-
-...
-
-@home.route('/api/<name>')
-@home.route('/api/<path>/<name>')
-def render_static(name, path=None):
-    if name == 'doc':
-        return send_from_directory(static_file_dir+"/../static/doc", 'index.html')
-
-...
-```
-
-
-
-## How to run It :smile:
-
-BE SURE THAT `python3` and `pip3` are referring to `python 3.7.x`.
-To find your `python` and `pip` version, run this commands:
-
-```bash
-$ python3 --version
-> Python 3.7.0
-$ pip3 --version
-> pip 18.0 from /usr/local/lib/python3.7/site-packages/pip (python 3.7)
-```
-
-
-Once you found commands refering to the correct version, use them in the following scripts.
-
-- Open a new terminal and run `redis-server`
-
-  `$ redis-server`
-
+## To run this microservice
+``'
 - Open a new terminal and run `data-service`
 
   ```bash
-  cd <YOUR_DIRECTORY>/BeepBeep-dataservice/
+  cd <YOUR_DIRECTORY>/BeepBeep-challenges/
   pip3 install -r requirements.txt
   python3 setup.py develop
-  beepbeep-dataservice
+  beepbeep-dataservice-challenge
   ```
