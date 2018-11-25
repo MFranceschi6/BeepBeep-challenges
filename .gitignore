@@ -1,0 +1,13 @@
+.tox/
+
+*.egg*
+
+.bin/
+
+.include/
+
+.lib/
+
+.src/
+
+requirements.txte
