@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: BeepBeep Challenge Microservice
+  description: Returns info about BeepBeep user challenges
+  license:
+    name: APLv2
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.9
+
+
+servers:
+  - url: 0.0.0.0:5003
+
+components:
+  schemas:
+    Challenge:
+      type: object
+      properties:
+        run_challenged_id:
+          type: integer
+          description: ID of the challenged run
+        run_challenger_id:
+          type: integer
+          description: ID of the challenger run
+        runner_id:
+          type: integer
+          description: The id of the user who made this run
+        start_date:
+          type: integer
+          format: timestamp
+          description: The timestamp when this challenge was made
+        result:
+          type: boolean
+          description: The result of the challenge that can been won or lost
+      required:
+        - run_challenged_id
+        - runner_id
+
+    ResponseChallenge:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              description: The ID of the Challenge
+        - $ref: '#/components/schemas/Challenge'
+
+    Error:
+      type: object
+      properties:
+        response-code:
+          type: integer
+          description: The code of the HTTP response error
+        message:
+          type: string
+          description: Additional description about the error
+      required:
+        - response-code
+        - message
+
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    BadRequest:
+      description: Something went wrong trying to parse the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+paths:
+    /users/{runner_id}/challenges:
+      parameters:
+        - in: path
+          name: runner_id
+          description: The id of the user
+          required: true
+          schema:
+            type: integer
+      get:
+        operationId: getChallenges
+        description: Get all the challenges of an user
+        parameters:
+        - in: path
+          name: runner_id
+          description: ID of User
+          required: true
+          schema:
+            type: integer
+        responses:
+          '503':
+            description: Connection with Data Service failed
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '200':
+            description: A, possibly empty, list of challenges
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ResponseChallenge'
+                  minItems: 0
+      post:
+        operationId: createChallenge
+        description: Create a new challenge
+        requestBody:
+          description: User has to provide its id and the run_challenged_id
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  run_challenged_id:
+                    type: integer
+        responses:
+          '204':
+            description: The challenge were added succesfully
+          '400':
+            $ref: '#/components/responses/BadRequest'
+          '503':
+            description: Connection with Data Service failed
+      delete:
+        operationId: deleteUserChallenges
+        description: Delete all the Challenges of a specified User
+        responses:
+          '200':
+            description: The challenges are succesfully deleted
+
+    /users/{runner_id}/challenges/{challenge_id}:
+      parameters:
+      - in: path
+        name: runner_id
+        description: The id of the user
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: challenge_id
+        description: The id of the challenge
+        required: true
+        schema:
+          type: integer
+      get:
+        operationId: getChallengeID
+        description: Get The challenge *challenge_id* of the user *runner_id*
+        responses:
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '200':
+            description: The challenge of the user
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ResponseChallenge'
+      put:
+          operationId: completeChallenge
+          description: Complete the challenge specied with the run challenger 
+          requestBody:
+            description: The id of the run challenger
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    run_challenger_id:
+                      type: integer
+          responses:
+            '200':
+              description: The challenge succesfully updated
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ResponseChallenge'
+            '404':
+              $ref: '#/components/responses/NotFound'
+            '503':
+              description: Connection with Data Service failed
+
