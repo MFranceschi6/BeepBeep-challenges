@@ -172,6 +172,8 @@ paths:
               application/json:
                 schema:
                   type: object
+                  required:
+                  - run_challenger_id
                   properties:
                     run_challenger_id:
                       type: integer
