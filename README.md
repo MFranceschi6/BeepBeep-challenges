@@ -1,12 +1,7 @@
-# BeepBeep-dataservice :runner:
+# BeepBeep-dataservice-challenge
 
-## API Documentation :trollface:
-
-This microservice provide a standard API, the documentation can be found at this [page](https://mfranceschi6.github.io/BeepBeep-dataservice)
-
-Do you want to know how I made it? Well nothing more simpler: use make :smile:
-
-first of all change the variables PKG, SERVICE and API inside the makefile
+This microservice provide the following functionalities for the user:
+- 
 
 ```
 ...
