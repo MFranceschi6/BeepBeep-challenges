@@ -9,6 +9,7 @@
 - Complete a challenge, reachable to /users/<runner_id>/challenges/<challenge_id> and providing another id run
     To complete correctly a challenge is needed to provide a run that has been created later than the creation date of the challenge.
 
+
 To win a challenge the user must run for longer distance and at least at the same speed than the challenged run
 or the user can run for the same distance but must have a speed greater than the challenged run
 
