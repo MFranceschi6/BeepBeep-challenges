@@ -2,7 +2,7 @@
 
 ## API Documentation :trollface:
 
-This microservice provide a standard API, the documentation can be found at this [page](https://mfranceschi6.github.io/BeepBeep-dataservice)
+This microservice provide a standard API, the documentation can be found at this [page](https://mfranceschi6.github.io/BeepBeep-challenges)
 
 Do you want to know how I made it? Well nothing more simpler: use make :smile:
 
