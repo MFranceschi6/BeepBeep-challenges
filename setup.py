@@ -9,5 +9,5 @@ setup(name='beepbeep-challenge',
       zip_safe=False,
       entry_points="""
       [console_scripts]
-      beepbeep-challenge = beepbeep.challenge_microservice.challenge:main
+      beepbeep-challenges = beepbeep.challenge_microservice.challenge:main
       """)
