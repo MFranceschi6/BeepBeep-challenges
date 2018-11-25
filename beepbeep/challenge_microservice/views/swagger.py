@@ -45,7 +45,7 @@ def create_challenge(runner_id):
                 db_challenge.start_date = datetime.today()
                 db.session.add(db_challenge)
                 db.session.commit()
-                return "added 1 challenge", 204
+                return '', 204
     except requests.exceptions.RequestException as err:
         print(err)
         return abort(503) # SERVICE UNAVAILABLE
@@ -80,12 +80,14 @@ def complete_challenge(runner_id, challenge_id):
             except requests.exceptions.RequestException as err:
                 print(err)
                 return abort(503)
-            if run is not None and datetime.fromtimestamp(run['start_date']) > challenge.start_date:
-                challenge.run_challenger_id = run_challenger_id
-                challenge.result = determine_result(challenge, run)
-                db.session.commit()
-                return jsonify(challenge.to_json())
-            else: return bad_response(404, 'No compatible run with ID ' + str(challenge_id) + ' for user with ID ' + str(runner_id))
+            if 'start_date' in run:
+                if datetime.fromtimestamp(run['start_date']) > challenge.start_date:
+                    challenge.run_challenger_id = run_challenger_id
+                    challenge.result = determine_result(challenge, run)
+                    db.session.commit()
+                    return jsonify(challenge.to_json())
+                else: return bad_response(404, 'No compatible run for the challenge ' + str(challenge_id) + ' of the user with ID ' + str(runner_id))
+            else: return bad_response(404, 'No run with ID ' + str(run_challenger_id) + ' for user with ID ' + str(runner_id))
         else: return jsonify(challenge.to_json())
     else: return bad_response(404, 'No challenge with ID ' + str(challenge_id) + ' for user with ID ' + str(runner_id))
 
@@ -109,4 +111,4 @@ def delete_user_challenges(runner_id):
     for challenge in challenges:
         db.session.delete(challenge)
         db.session.commit()
-    return "challenges removed", 200
+    return '', 200

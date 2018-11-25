@@ -93,13 +93,6 @@ paths:
       get:
         operationId: getChallenges
         description: Get all the challenges of an user
-        parameters:
-        - in: path
-          name: runner_id
-          description: ID of User
-          required: true
-          schema:
-            type: integer
         responses:
           '503':
             description: Connection with Data Service failed
@@ -124,6 +117,8 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - run_challenged_id
                 properties:
                   run_challenged_id:
                     type: integer
