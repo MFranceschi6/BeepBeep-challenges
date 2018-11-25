@@ -1,6 +1,6 @@
 # BeepBeep-dataservice-challenge
 
-à# This microservice provide the following functionalities for the user:
+## This microservice provide the following functionalities for the user:
 
 - Create new Challenge, reachable to /users/<runner_id>/challenges and provining a id run
 - Check the challenges of a user, reachable to /users/<runner_id>/challenges
