@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>BeepBeep Challenge Microservice</title>
+    <title>BeepBeep Challenge</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -226,10 +226,10 @@
         <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#beepbeep-challenge-microservice" class="toc-h1 toc-link" data-title="BeepBeep Challenge Microservice v0.1.9">BeepBeep Challenge Microservice v0.1.9</a>
+            <a href="#beepbeep-challenge" class="toc-h1 toc-link" data-title="BeepBeep Challenge v0.1.9">BeepBeep Challenge v0.1.9</a>
           </li>
           <li>
-            <a href="#beepbeep-challenge-microservice-default" class="toc-h1 toc-link" data-title="Default">Default</a>
+            <a href="#beepbeep-challenge-default" class="toc-h1 toc-link" data-title="Default">Default</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#getchallenges" class="toc-h2 toc-link" data-title="getChallenges">getChallenges</a>
@@ -269,7 +269,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="beepbeep-challenge-microservice">BeepBeep Challenge Microservice v0.1.9</h1>
+        <h1 id="beepbeep-challenge">BeepBeep Challenge v0.1.9</h1>
 
 <blockquote>
 <p>Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.</p>
@@ -285,7 +285,7 @@
 
 <p>License: <a href="https://www.apache.org/licenses/LICENSE-2.0.html">APLv2</a></p>
 
-<h1 id="beepbeep-challenge-microservice-default">Default</h1>
+<h1 id="beepbeep-challenge-default">Default</h1>
 <h2 id='getchallenges'>getChallenges</h2>
 <p><a id="opIdgetChallenges"></a></p>
 
@@ -451,12 +451,6 @@ curl -X GET 0.0.0.0:5003/users/<span class="o">{</span>runner_id<span class="o">
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>A, possibly empty, list of challenges</td>
 <td>Inline</td>
-</tr>
-<tr>
-<td>404</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
-<td>The specified resource was not found</td>
-<td><a href="#schemaerror">Error</a></td>
 </tr>
 <tr>
 <td>503</td>
