@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: BeepBeep Challenge Microservice
+  title: BeepBeep Challenge
   description: Returns info about BeepBeep user challenges
   license:
     name: APLv2
@@ -96,8 +96,6 @@ paths:
         responses:
           '503':
             description: Connection with Data Service failed
-          '404':
-            $ref: '#/components/responses/NotFound'
           '200':
             description: A, possibly empty, list of challenges
             content:

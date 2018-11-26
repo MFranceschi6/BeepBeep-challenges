@@ -3,7 +3,7 @@ from datetime import datetime, date
 from .util import bad_response
 from flakon import SwaggerBlueprint
 from flask import request, jsonify, redirect, abort
-from beepbeep.challenge_microservice.database import db, Challenge
+from beepbeep.challenges.database import db, Challenge
 from json import loads
 from flakon.util import retry_request
 from flakon.request_utils import users_endpoint, get_request_retry, runs_endpoint, put_request_retry
@@ -56,9 +56,7 @@ def create_challenge(runner_id):
 def get_challenges(runner_id):
     challenges = db.session.query(Challenge).\
                     filter(Challenge.runner_id == runner_id)
-    if challenges.count() > 0:
-        return jsonify([challenge.to_json() for challenge in challenges])
-    return bad_response(404, 'No challenge for user with ID ' + str(runner_id))
+    return jsonify([challenge.to_json() for challenge in challenges])
 
 
 
