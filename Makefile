@@ -5,7 +5,7 @@ BIN = $(VENV)/bin
 PYTHON = $(BIN)/python
 API=api.yaml
 PKG=beepbeep
-SERVICE=challenge_microservice
+SERVICE=challenges
 
 INSTALL = $(BIN)/pip install --no-deps
 

@@ -5,8 +5,8 @@ import signal
 from chaussette.server import make_server
 from werkzeug.serving import run_with_reloader
 
-from beepbeep.challenge_microservice.app import create_app
-from beepbeep.challenge_microservice.database import db, init_database
+from beepbeep.challenges.app import create_app
+from beepbeep.challenges.database import db, init_database
 
 
 def _quit(signal, frame):
@@ -16,7 +16,7 @@ def _quit(signal, frame):
 
 
 def main(args=sys.argv[1:]):
-    parser = argparse.ArgumentParser(description='beepbeep Challenge Mricoservice')
+    parser = argparse.ArgumentParser(description='beepbeep Challenge')
 
     parser.add_argument('--fd', type=int, default=None)
     parser.add_argument('--config-file', help='Config file',
