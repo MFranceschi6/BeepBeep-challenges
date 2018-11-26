@@ -21,5 +21,5 @@ or the user can run for the same distance but must have a speed greater than the
   cd <YOUR_DIRECTORY>/BeepBeep-challenges/
   pip3 install -r requirements.txt
   python3 setup.py develop
-  beepbeep-dataservice-challenge
+  beepbeep-challenges
   ```
