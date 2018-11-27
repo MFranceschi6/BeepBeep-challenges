@@ -39,13 +39,17 @@ def create_challenge(runner_id):
         run = get_single_run(runner_id, challenge['run_challenged_id'])
         if check_user(runner_id) and 'id' in run:
             if run['runner_id'] == runner_id:
+                today = datetime.today()
                 db_challenge = Challenge()
                 db_challenge.runner_id = runner_id
                 db_challenge.run_challenged_id = challenge['run_challenged_id']
-                db_challenge.start_date = datetime.today()
+                db_challenge.start_date = today
                 db.session.add(db_challenge)
                 db.session.commit()
-                return '', 204
+                new_challenge = db.session.query(Challenge).\
+                                                filter(Challenge.runner_id == runner_id).\
+                                                filter(Challenge.start_date == today).first()
+                return jsonify(new_challenge.id)
     except requests.exceptions.RequestException as err:
         print(err)
         return abort(503) # SERVICE UNAVAILABLE
