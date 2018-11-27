@@ -58,9 +58,12 @@ def create_challenge(runner_id):
 
 @api.operation('getChallenges')
 def get_challenges(runner_id):
-    challenges = db.session.query(Challenge).\
-                    filter(Challenge.runner_id == runner_id)
-    return jsonify([challenge.to_json() for challenge in challenges])
+    if check_user(runner_id):
+        challenges = db.session.query(Challenge).\
+                        filter(Challenge.runner_id == runner_id)
+        return jsonify([challenge.to_json() for challenge in challenges])
+    else:
+        return bad_response(404, 'No user with ID ' + str(runner_id))
 
 
 
