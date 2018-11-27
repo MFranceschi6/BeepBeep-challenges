@@ -123,6 +123,11 @@ paths:
         responses:
           '204':
             description: The challenge were added succesfully
+            content:
+              application/json:
+                schema:
+                  type: integer
+                  description: id of the created cahllenge
           '400':
             $ref: '#/components/responses/BadRequest'
           '503':
