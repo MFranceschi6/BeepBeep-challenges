@@ -96,6 +96,8 @@ paths:
         responses:
           '503':
             description: Connection with Data Service failed
+          '404': 
+            description: User not found
           '200':
             description: A, possibly empty, list of challenges
             content:
@@ -121,7 +123,7 @@ paths:
                   run_challenged_id:
                     type: integer
         responses:
-          '204':
+          '200':
             description: The challenge were added succesfully
             content:
               application/json:
