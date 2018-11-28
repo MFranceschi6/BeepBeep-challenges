@@ -1,4 +1,4 @@
-# BeepBeep-dataservice-challenge
+# BeepBeep-dataservice-challenge [![Build Status](https://travis-ci.org/MFranceschi6/BeepBeep-challenges.svg?branch=master)](https://travis-ci.org/MFranceschi6/BeepBeep-challenges) [![Coverage Status](https://coveralls.io/repos/github/MFranceschi6/BeepBeep-challenges/badge.svg?branch=master)](https://coveralls.io/github/MFranceschi6/BeepBeep-challenges?branch=master)
 
 ## This microservice provide the following functionalities for the user:
 
