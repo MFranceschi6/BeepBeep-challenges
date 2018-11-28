@@ -12,7 +12,7 @@ from .database import db
 
 
 _HERE = os.path.dirname(__file__)
-os.environ['TESTDIR'] = os.path.join(_HERE, 'tests')
+os.environ['TESTDIR'] = os.path.join(Path(_HERE).parents[1], 'tests')
 _SETTINGS = os.path.join(_HERE, 'settings.ini')
 
 def create_app(settings=None):
