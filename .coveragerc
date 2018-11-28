@@ -1,5 +1,4 @@
 [run]
 omit =
 	beepbeep/challenges/tests/*
- 	beepbeep/challenges/app.py
  	beepbeep/challenges/challenges.py
