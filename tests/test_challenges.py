@@ -2,7 +2,7 @@ from beepbeep.challenges.database import Challenge
 from unittest import mock
 from datetime import datetime
 import beepbeep
-from werkzeug.wrappers import Response
+import requests
 
 def get_single_run_dict(user_id=1,run_id=1,start_date=1543334551.0):
     return {
@@ -25,14 +25,29 @@ def get_error_dict(status_code = 404):
 
 
 def check_error(response, status_code, expected_message=None):
+    """"
+    check error dictionaries returned by flask.
+    expected_message param is ignored when status_code is 503
+    """""
     json_error = response.get_json()
-    response_code = json_error['response-code']
-    message = json_error['message']
-    return \
-        response.status_code == status_code and \
-        len(json_error.keys())==2 and \
-        response_code == status_code and \
-        (expected_message is None or expected_message == message)
+
+    if(status_code == 503) :
+        return \
+            response.status_code == status_code and \
+            len(json_error.keys())==3 and \
+            json_error['code'] == status_code and \
+            json_error['description'] == "The server is temporarily unable to service "\
+                + "your request due to maintenance downtime or capacity problems.  "\
+                + "Please try again later." and \
+            json_error['message'] == "503 Service Unavailable: The server is temporarily unable "\
+                + "to service your request due to maintenance downtime or capacity problems.  "\
+                + "Please try again later."
+    else :
+        return \
+            response.status_code == status_code and \
+            len(json_error.keys())==2 and \
+            json_error['response-code'] == status_code and \
+            (expected_message is None or expected_message == json_error['message'])
 
 
 def test_create(client, db_instance):
@@ -110,6 +125,14 @@ def test_create(client, db_instance):
 
             print(response.get_json())
     assert check_error(response,400)
+
+    #posting when an exception is raised
+    with mock.patch('beepbeep.challenges.views.swagger.get_single_run') as mocked:
+        mocked.side_effect = requests.exceptions.HTTPError(mock.Mock(status=404), 'not found')
+        response = client.post('/users/888/challenges', json={
+            'run_challenged_id': 1
+        })
+    assert check_error(response,503)
 
 def test_get_challenge_id(client, db_instance):
     """"
@@ -195,6 +218,15 @@ def test_put(client, db_instance):
             'run_challenger_id': challenger_id
         })
     assert check_error(response,404)
+
+    #putting (not working: request exception captured when get_signle_run is invoked)
+    with mock.patch('beepbeep.challenges.views.swagger.get_single_run') as mocked:
+        mocked.side_effect = requests.exceptions.HTTPError(mock.Mock(status=404), 'not found')
+        response = client.put('/users/' + str(user_id) + '/challenges/1', json={
+            'run_challenger_id': challenger_id
+        })
+    json_data = response.get_json()
+    assert check_error(response,503)
 
     #putting (works)
     with mock.patch('beepbeep.challenges.views.swagger.get_single_run') as mocked:
@@ -292,6 +324,12 @@ def test_get(client, db_instance):
     assert isinstance(json_data, list)
     assert len(json_data) == len(run_id_list)
 
+    #getting challenges when user does not exist
+    with mock.patch('beepbeep.challenges.views.swagger.check_user') as mocked:
+        mocked.return_value = False
+        response = client.get('/users/' + str(user_id) + '/challenges')
+    assert check_error(response,404)
+
 def test_utilities(client, db_instance):
     """"
     Testing utility functions
@@ -317,3 +355,24 @@ def test_utilities(client, db_instance):
         }
         assert beepbeep.challenges.views.swagger.check_user(777) == True
 
+        # check get_single_run
+        mocked.return_value.json.return_value = {'message': 'This is the error description',\
+            'response-code': 404}
+        assert isinstance(beepbeep.challenges.views.swagger.get_single_run(777,3), dict)
+
+    #check date_parsing
+    time = datetime(year=2011, month=1, day=15, hour=19, minute=45, second=56)
+    assert beepbeep.challenges.views.swagger.date_parsing(time) == '2011-01-15T19:45:56Z'
+
+    # #check determine_result when an exception is captured
+    # with mock.patch('beepbeep.challenges.views.swagger.get_single_run') as mocked:
+    #     mocked.side_effect = requests.exceptions.HTTPError(mock.Mock(status=404), 'not found')
+    #     class Foo:
+    #         pass
+    #     challenge = Foo()
+    #     challenge.runner_id = 123456
+    #     challenge.run_challenged_id = 123456
+    #     with mock.patch()
+    #     return_value = beepbeep.challenges.views.swagger.determine_result(challenge,123456)
+    #
+    # assert return_value==1
