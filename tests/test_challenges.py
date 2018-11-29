@@ -363,16 +363,3 @@ def test_utilities(client, db_instance):
     #check date_parsing
     time = datetime(year=2011, month=1, day=15, hour=19, minute=45, second=56)
     assert beepbeep.challenges.views.swagger.date_parsing(time) == '2011-01-15T19:45:56Z'
-
-    # #check determine_result when an exception is captured
-    # with mock.patch('beepbeep.challenges.views.swagger.get_single_run') as mocked:
-    #     mocked.side_effect = requests.exceptions.HTTPError(mock.Mock(status=404), 'not found')
-    #     class Foo:
-    #         pass
-    #     challenge = Foo()
-    #     challenge.runner_id = 123456
-    #     challenge.run_challenged_id = 123456
-    #     with mock.patch()
-    #     return_value = beepbeep.challenges.views.swagger.determine_result(challenge,123456)
-    #
-    # assert return_value==1
