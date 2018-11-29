@@ -453,6 +453,12 @@ curl -X GET 0.0.0.0:5003/users/<span class="o">{</span>runner_id<span class="o">
 <td>Inline</td>
 </tr>
 <tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>User not found</td>
+<td>None</td>
+</tr>
+<tr>
 <td>503</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.6.4">Service Unavailable</a></td>
 <td>Connection with Data Service failed</td>
@@ -734,7 +740,7 @@ curl -X POST 0.0.0.0:5003/users/<span class="o">{</span>runner_id<span class="o"
 <blockquote>
 <p>Example responses</p>
 
-<p>204 Response</p>
+<p>200 Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="mi">0</span><span class="w">
 </span></code></pre>
@@ -749,8 +755,8 @@ curl -X POST 0.0.0.0:5003/users/<span class="o">{</span>runner_id<span class="o"
 </tr>
 </thead><tbody>
 <tr>
-<td>204</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.5">No Content</a></td>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>The challenge were added succesfully</td>
 <td>integer</td>
 </tr>
